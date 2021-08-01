@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import shortid from "shortid";
+import { connect } from "react-redux";
+import { onNameCheck } from "../../redux/contacts/contacts-actions";
+import { addNewContact } from "../../redux/contacts/contacts-actions";
 
 class ContactsForm extends Component {
   state = {
@@ -21,10 +24,12 @@ class ContactsForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
-    this.props.onNameCheck(this.state.name).length >= 1
+    onNameCheck(this.state.name).length >= 1
       ? alert(`Contact with the name ${this.state.name} already exists.`)
-      : this.props.addNewContact(this.state);
+      : addNewContact(this.state);
+    // this.props.onNameCheck(this.state.name).length >= 1
+    //   ? alert(`Contact with the name ${this.state.name} already exists.`)
+    //   : this.props.addNewContact(this.state);
 
     this.reset();
   };
@@ -43,7 +48,7 @@ class ContactsForm extends Component {
             type="text"
             name="name"
             value={this.state.name}
-            id={this.nameInputId}
+            id={this.id}
             onChange={this.handleChange}
             placeholder="enter name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -72,4 +77,8 @@ class ContactsForm extends Component {
   }
 }
 
-export default ContactsForm;
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (newName) => dispatch(addNewContact(newName), onNameCheck(newName)),
+});
+
+export default connect(null, mapDispatchToProps)(ContactsForm);
