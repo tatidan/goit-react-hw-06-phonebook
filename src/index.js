@@ -1,24 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import store from "./redux/contacts/store";
-// import { myAction } from "./redux/actions";
-import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-
-// console.log(store.getState());
-// console.log(store.dispatch(myAction));
-// // store.dispatch(myAction);
-// store.dispatch(myAction(10));
+import { PersistGate } from "redux-persist/es/integration/react";
+import { store } from "./redux/contacts/store";
+import { persistor } from "./redux/contacts/store";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+//================================================================
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <BrowserRouter>
+//         <Provider store={store}>
+//         <App />
+//       </Provider>
+//     </BrowserRouter>
+//   </React.StrictMode>,
+//   document.getElementById("root")
+// );

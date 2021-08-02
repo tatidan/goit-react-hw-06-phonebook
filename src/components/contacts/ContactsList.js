@@ -12,9 +12,7 @@ const ContactsList = ({ contacts, removeContact }) => {
           <button
             className="deleteBtn"
             type="button"
-            onClick={() => {
-              removeContact(id);
-            }}
+            onClick={() => removeContact(id)}
           >
             Delete
           </button>
@@ -32,13 +30,6 @@ const onFilterRender = (allContacts, filter) => {
   );
 };
 
-// const mapStateToProps = (state) => {
-//   const { filter, contacts } = state.contacts;
-//   const filteredContacts = onFilterRender(contacts, filter);
-
-//   return { contacts: filteredContacts };
-// };
-
 const mapStateToProps = ({ contacts: { contacts, filter } }) => ({
   contacts: onFilterRender(contacts, filter),
 });
@@ -48,3 +39,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactsList);
+
+//============================================================
+
+// const mapStateToProps = (state) => {
+//   const { filter, contacts } = state.contacts;
+//   const filteredContacts = onFilterRender(contacts, filter);
+
+//   return { contacts: filteredContacts };
+// };
